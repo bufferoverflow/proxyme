@@ -48,8 +48,8 @@ find_package_handle_standard_args(LibCtemplate  DEFAULT_MSG
 mark_as_advanced(LIBCTEMPLATE_INCLUDE_DIR LIBCTEMPLATE_LIBRARY )
 ###################################################################################
 
-ADD_CUSTOM_COMMAND(OUTPUT proxyme.tpl.varnames.h
-                   COMMAND make_tpl_varnames_h templates/proxyme.tpl
+ADD_CUSTOM_COMMAND(OUTPUT ${PROJECT_BINARY_DIR}/proxyme.tpl.varnames.h
+                   COMMAND make_tpl_varnames_h ${PROJECT_SOURCE_DIR}/templates/proxyme.tpl
                    COMMENT "Building header file with ctemplate definitions"
                   )
 
