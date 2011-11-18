@@ -3,3 +3,8 @@ CMakeFiles
 Makefile
 cmake_install.cmake
 install_manifest.txt
+
+build/
+config.h
+proxyme.tpl.varnames.h
+proxyme
