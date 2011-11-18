@@ -5,9 +5,9 @@ to update the proxy settings of these applications
 
 Build it:
 ---------
-cmake .
-make
-sudo make install
+$ cmake .
+$ make
+$ sudo make install
 
 Use it:
 -------
