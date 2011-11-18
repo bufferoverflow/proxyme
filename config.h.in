@@ -2,7 +2,7 @@
 #undef PACKAGE_BUGREPORT
 
 /* Define to the full name of this package. */
-#define PACKAGE_NAME @PROJECT_NAME@
+#define PACKAGE_NAME "@PROJECT_NAME@"
 
 /* Define to the full name and version of this package. */
 #undef PACKAGE_STRING
@@ -15,3 +15,7 @@
 
 /* Define to the version of this package. */
 #define PACKAGE_VERSION @proxyme_VERSION@
+
+#define DATADIR "@CMAKE_INSTALL_PREFIX@/share/proxyme/"
+#define CONFIGDIR "/.proxyme/"
+#define CONFIGFILENAME "proxyme.ini"

@@ -44,10 +44,6 @@ using namespace boost;
 #include "config.h"
 #include "proxyme.tpl.varnames.h"
 
-#define DATADIR "/usr/share/proxyme/"
-#define CONFIGDIR "/.proxyme/"
-#define CONFIGFILENAME "proxyme.ini"
-
 static std::string environment_mapper(const std::string &var_name) {
 	if (var_name == "HOME")
 		return var_name;
