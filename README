@@ -5,9 +5,10 @@ to update the proxy settings of these applications
 
 Build it:
 ---------
-$ mkdir proxyme build
+$ mkdir proxyme 
 $ cd proxyme
 $ git clone https://github.com/bufferoverflow/proxyme.git
+$ mkdir build
 $ cd build
 $ cmake ../proxyme/
 
