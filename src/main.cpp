@@ -127,15 +127,18 @@ int main(int argc, char** argv) {
 		write_ini(configfile, pt);
 	}
 
-	if ( (proxy_host.empty() || proxy_port == 0) && !disable) {
-		cout << "Proxy host and port is required." << endl;
-		return 1;
+	if(!disable) {
+		if (proxy_host.empty() || proxy_port == 0) {
+			cout << "Proxy host and port is required." << endl;
+			return 1;
+		}
+
+		if (!proxy_user.empty() && proxy_pwd.empty()) {
+			cout << "Password is required if user is defined!" << endl;
+			return 1;
+		}
 	}
 
-	if (!proxy_user.empty() && proxy_pwd.empty()) {
-		cout << "Password is required if user is defined!" << endl;
-		return 1;
-	}
 
 	// fill the template dictionary
 	ctemplate::TemplateDictionary dict("proxyme");
