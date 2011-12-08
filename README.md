@@ -1,32 +1,40 @@
 proxyme enable and disables proxy settings for several applications such as git, svn, wget, apt, etc.
 
 It uses the templates and the proxyme.ini file located at ~/.proxyme/
-to update the proxy settings of these applications
+to update the proxy settings of these applications.
 
-Build & Install it:
+
+Build & Install it
 -------------------
-$ mkdir proxyme 
-$ cd proxyme
-$ git clone https://github.com/bufferoverflow/proxyme.git
-$ mkdir build
-$ cd build
-$ cmake ../proxyme/
-$ make
-$ make install
+    mkdir proxyme 
+    cd proxyme
+    git clone https://github.com/bufferoverflow/proxyme.git
+    mkdir build
+    cd build
+    cmake ../proxyme/
+    make
+    make install
 
-Use it:
+Use it
 -------
 help:
-$ proxyme -h
+
+    proxyme -h
 
 disable proxies:
-$ proxyme -d
+
+    proxyme -d
 
 enable proxies:
-$ ./proxyme --user='DOMAIN\user' --password=1234 --host=proxy.example.com --port=85 --password='1234'
+
+    proxyme --host=proxy.example.com --port=85 --user='DOMAIN\user' --password='1234'
 
 you can use -s option to save your settings within ~/.proxyme/proxyme.ini file
 
-Customize it:
+Customize it
 -------------
 edit the files under ~/.proxyme/ to reflect your other personal settings as well
+
+License
+-------
+see [LICENSE](LICENSE) 
