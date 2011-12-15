@@ -95,7 +95,7 @@ int main(int argc, char** argv) {
 
   if (!filesystem::exists(configfile)) {
     cout << "No configuration available, initialization of proxyme...";
-    if (filesystem::exists(configfile)) {
+    if (filesystem::exists(DATADIR)) {
       filesystem::create_directory(configdir);
       filesystem::path dir = DATADIR;
 
