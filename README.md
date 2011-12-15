@@ -13,7 +13,7 @@ Build & Install it
     cd build
     cmake ../proxyme/
     make
-    make install
+    sudo make install
 
 Use it
 -------
