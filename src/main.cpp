@@ -30,6 +30,8 @@
 #include <iostream>  
 #include <fstream>
 
+#include <unistd.h>
+
 #include <ctemplate/template.h>
 
 #include <boost/program_options.hpp>
@@ -141,7 +143,8 @@ int main(int argc, char** argv) {
 
     if (!proxy_user.empty() && proxy_pwd.empty()) {
       cout << "Password is required if user is defined!" << endl;
-      return 1;
+	  char *pass = getpass("Please enter password: ");
+	  proxy_pwd = pass;
     }
   }
 
