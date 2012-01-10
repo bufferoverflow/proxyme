@@ -58,6 +58,7 @@ int main(int argc, char** argv) {
   bool overwrite = false;
   bool disable = false;
   bool save = false;
+  bool urlencode = false;
   filesystem::path home;
   property_tree::ptree pt;
 
@@ -77,6 +78,8 @@ int main(int argc, char** argv) {
           "Overwriting files, don't care if they exist!")
       ("save,s",  program_options::value<bool>(&save)->zero_tokens(),
           "Save current parameters within proxyme.ini file")
+	  ("urlencode,u", program_options::value<bool>(&urlencode)->zero_tokens(),
+	      "Store the password in URL encoded form")
       ("HOME", program_options::value<boost::filesystem::path>(&home)->default_value(home),
           "Environment Variable: HOME");
 
@@ -150,6 +153,22 @@ int main(int argc, char** argv) {
 
   if (!proxy_user.empty()) {
     dict.SetValue(kp_PROXY_USER, proxy_user);
+	
+	if ( urlencode ) {
+		// Replace each character of proxy_pwd with its hex value prependen by a % sign
+		// this is known as URL encoding (http://en.wikipedia.org/wiki/Percent-encoding)
+		// This allows to have special characters in the password and gives a basic protection
+		// against accidently revealing the password
+		char hex[3];
+		string enc_proxy_pwd = "";
+		int i, length = proxy_pwd.length();
+		for(i = 0; i < length; i++)
+		{
+	    	sprintf(hex, "%%%X",proxy_pwd[i]);
+			enc_proxy_pwd.append(hex);
+		}
+		proxy_pwd = enc_proxy_pwd;
+	}
     dict.SetValue(kp_PROXY_PWD, proxy_pwd);
     dict.ShowSection(kp_PROXY_AUTH);
   }
