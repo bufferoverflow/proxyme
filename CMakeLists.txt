@@ -64,6 +64,7 @@ set(proxyme_templates 	templates/proxyme.ini
 						templates/apt.tpl
 						templates/curl.tpl
 						templates/git.tpl
+						templates/npm.tpl
 						templates/subversion.tpl
 						templates/wget.tpl
 						)
