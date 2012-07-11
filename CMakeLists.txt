@@ -62,6 +62,7 @@ target_link_libraries(
 )
 set(proxyme_templates 	templates/proxyme.ini
 						templates/apt.tpl
+						templates/curl.tpl
 						templates/git.tpl
 						templates/subversion.tpl
 						templates/wget.tpl
