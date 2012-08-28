@@ -60,10 +60,12 @@ target_link_libraries(
 	${Boost_LIBRARIES}
 	${LIBCTEMPLATE_LIBRARIES}
 )
-set(proxyme_templates 	templates/proxyme.ini
+set(proxyme_templates
+						templates/proxyme.ini
 						templates/apt.tpl
 						templates/curl.tpl
 						templates/git.tpl
+						templates/maven.tpl
 						templates/npm.tpl
 						templates/subversion.tpl
 						templates/wget.tpl
