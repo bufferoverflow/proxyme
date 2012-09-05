@@ -80,18 +80,24 @@ int main(int argc, char** argv) {
           "Overwriting files, don't care if they exist!")
       ("save,s",  program_options::value<bool>(&save)->zero_tokens(),
           "Save current parameters within proxyme.ini file")
-	  ("urlencode,u", program_options::value<bool>(&urlencode)->zero_tokens(),
-	      "Store the password in URL encoded form")
+      ("urlencode,u", program_options::value<bool>(&urlencode)->zero_tokens(),
+          "Store the password in URL encoded form")
       ("HOME", program_options::value<boost::filesystem::path>(&home)->default_value(home),
           "Environment Variable: HOME");
 
   program_options::variables_map options;
-  program_options::store(program_options::parse_command_line(argc, argv, desc), options);
-  program_options::store(program_options::parse_environment(desc, &environment_mapper), options);
-  program_options::notify(options);
-
-  if (options.count("help")) {
-    cout << desc << endl;
+  try {
+    program_options::store(program_options::parse_command_line(argc, argv, desc), options);
+    program_options::store(program_options::parse_environment(desc, &environment_mapper), options);
+    program_options::notify(options);
+    if (options.count("help")) {
+      cout << desc << endl;
+      return 1;
+    }
+  } catch (boost::program_options::unknown_option)
+  {
+    cout << "invalid option" << endl;
+    cout << "Try `proxyme --help' for more information." << endl;
     return 1;
   }
 
@@ -114,7 +120,7 @@ int main(int argc, char** argv) {
       cout << "Customize here: " << configdir.directory_string() << endl;
       return 0;
       }
-    else{
+    else {
       cout << " error." << endl;
       cout << "Template directory " << DATADIR << " does not exist, did you made a proper install?" << endl;
       return 1;
@@ -143,8 +149,8 @@ int main(int argc, char** argv) {
 
     if (!proxy_user.empty() && proxy_pwd.empty()) {
       cout << "Password is required if user is defined!" << endl;
-	  char *pass = getpass("Please enter password: ");
-	  proxy_pwd = pass;
+      char *pass = getpass("Please enter password: ");
+      proxy_pwd = pass;
     }
   }
 
@@ -156,22 +162,22 @@ int main(int argc, char** argv) {
 
   if (!proxy_user.empty()) {
     dict.SetValue(kp_PROXY_USER, proxy_user);
-	
-	if ( urlencode ) {
-		// Replace each character of proxy_pwd with its hex value prependen by a % sign
-		// this is known as URL encoding (http://en.wikipedia.org/wiki/Percent-encoding)
-		// This allows to have special characters in the password and gives a basic protection
-		// against accidently revealing the password
-		char hex[3];
-		string enc_proxy_pwd = "";
-		int i, length = proxy_pwd.length();
-		for(i = 0; i < length; i++)
-		{
-	    	sprintf(hex, "%%%X",proxy_pwd[i]);
-			enc_proxy_pwd.append(hex);
-		}
-		proxy_pwd = enc_proxy_pwd;
-	}
+
+    if ( urlencode ) {
+      // Replace each character of proxy_pwd with its hex value prependen by a % sign
+      // this is known as URL encoding (http://en.wikipedia.org/wiki/Percent-encoding)
+      // This allows to have special characters in the password and gives a basic protection
+      // against accidently revealing the password
+      char hex[3];
+      string enc_proxy_pwd = "";
+      int i, length = proxy_pwd.length();
+      for(i = 0; i < length; i++)
+      {
+        sprintf(hex, "%%%X",proxy_pwd[i]);
+        enc_proxy_pwd.append(hex);
+      }
+      proxy_pwd = enc_proxy_pwd;
+    }
     dict.SetValue(kp_PROXY_PWD, proxy_pwd);
     dict.ShowSection(kp_PROXY_AUTH);
   }
@@ -228,4 +234,3 @@ int main(int argc, char** argv) {
 
   return 0;
 }
-
