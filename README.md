@@ -20,6 +20,17 @@ Use it
 help:
 
     proxyme -h
+    proxyme options:
+      -h [ --help ]         produce help message
+      --user arg            User      (e.g. DOMAIN\user)
+      --password arg        Password  (e.g. 1234)
+      --host arg            Host      (e.g. proxy.example.com)
+      --port arg (=0)       Port      (e.g. 85)
+      -d [ --disable ]      Disable Proxy and overwrite all config files!
+      -o [ --overwrite ]    Overwriting files, don't care if they exist!
+      -s [ --save ]         Save current parameters within proxyme.ini file
+      -u [ --urlencode ]    Store the password in URL encoded form
+      --HOME arg            Environment Variable: HOME
 
 disable proxies:
 
