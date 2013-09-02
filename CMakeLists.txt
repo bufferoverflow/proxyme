@@ -1,10 +1,14 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 PROJECT(proxyme)
 
-
 # The version number.
-set (proxyme_VERSION  0.0.1)
- 
+exec_program(
+  "git"
+  ${CMAKE_CURRENT_SOURCE_DIR}
+  ARGS "rev-parse --short HEAD"
+  OUTPUT_VARIABLE proxyme_VERSION )
+set (proxyme_VERSION  git-${proxyme_VERSION})
+
 # configure a header file to pass some of the CMake settings
 # to the source code
 configure_file (
@@ -13,7 +17,6 @@ configure_file (
   )
 
 include_directories("${PROJECT_BINARY_DIR}")
-
 
 FIND_PACKAGE(Boost COMPONENTS system filesystem program_options regex)
 
@@ -48,10 +51,17 @@ find_package_handle_standard_args(LibCtemplate  DEFAULT_MSG
 mark_as_advanced(LIBCTEMPLATE_INCLUDE_DIR LIBCTEMPLATE_LIBRARY )
 ###################################################################################
 
+find_program(CTEMPLATE_MAKE_TPL_VARNAMES_H ctemplate-make_tpl_varnames_h
+  $ENV{HOME}/bin
+  /usr/local/bin
+  /usr/bin
+  NO_DEFAULT_PATH
+)
+
 ADD_CUSTOM_COMMAND(OUTPUT ${PROJECT_BINARY_DIR}/proxyme.tpl.varnames.h
-                   COMMAND make_tpl_varnames_h ${PROJECT_SOURCE_DIR}/templates/proxyme.tpl
+                   COMMAND ${CTEMPLATE_MAKE_TPL_VARNAMES_H} ${PROJECT_SOURCE_DIR}/templates/proxyme.tpl
                    COMMENT "Building header file with ctemplate definitions"
-                  )
+)
 
 ADD_EXECUTABLE(proxyme src/main.cpp proxyme.tpl.varnames.h config.h)
 
@@ -60,17 +70,17 @@ target_link_libraries(
 	${Boost_LIBRARIES}
 	${LIBCTEMPLATE_LIBRARIES}
 )
+
 set(proxyme_templates
-						templates/proxyme.ini
-						templates/apt.tpl
-						templates/curl.tpl
-						templates/git.tpl
-						templates/maven.tpl
-						templates/npm.tpl
-						templates/subversion.tpl
-						templates/wget.tpl
-						)
-						
+  templates/proxyme.ini
+  templates/apt.tpl
+  templates/curl.tpl
+  templates/git.tpl
+  templates/maven.tpl
+  templates/npm.tpl
+  templates/subversion.tpl
+  templates/wget.tpl
+)
+
 install (TARGETS proxyme DESTINATION bin)
 install (FILES ${proxyme_templates} DESTINATION share/proxyme)
-
