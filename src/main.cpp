@@ -102,7 +102,7 @@ int main(int argc, char** argv) {
   }
 
   configdir = home.string() + CONFIGDIR;
-  configfile = configdir.directory_string() + CONFIGFILENAME;
+  configfile = configdir.string() + CONFIGFILENAME;
 
   if (!filesystem::exists(configfile)) {
     cout << "No configuration available, initialization of proxyme...";
@@ -113,11 +113,15 @@ int main(int argc, char** argv) {
       filesystem::directory_iterator end_it;
 
       for ( filesystem::directory_iterator it(dir); it != end_it; ++it) {
-        filesystem::copy_file(it->path(), configdir.directory_string() + it->path().filename());
+
+        filesystem::path tartget_file_path = configdir;
+        tartget_file_path /= it->path().filename();
+
+        filesystem::copy_file(it->path(), tartget_file_path);
       }
 
       cout << " done." << endl;
-      cout << "Customize here: " << configdir.directory_string() << endl;
+      cout << "Customize here: " << configdir.string() << endl;
       return 0;
       }
     else {
