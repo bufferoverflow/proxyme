@@ -201,7 +201,7 @@ int main(int argc, char** argv) {
   for (property_tree::ptree::const_iterator it = pt.begin(); it != pt.end(); it++) {
     // ignore config section
     if(it->first == "proxyme") {
-      it++;
+      continue;
     }
 
     string template_file = pt.get<string> (it->first + ".template");
