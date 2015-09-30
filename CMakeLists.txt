@@ -2,17 +2,41 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 PROJECT(proxyme)
 
 # get the git tag and hash
-exec_program(
-  "git"
-  ${CMAKE_CURRENT_SOURCE_DIR}
-  ARGS "name-rev --tags --name-only $(git rev-parse HEAD)"
-  OUTPUT_VARIABLE proxyme_GITTAG )
-exec_program(
-  "git"
-  ${CMAKE_CURRENT_SOURCE_DIR}
-  ARGS "rev-parse --short HEAD"
-  OUTPUT_VARIABLE proxyme_GITHASH )
-set (proxyme_VERSION  "${proxyme_GITTAG} (${proxyme_GITHASH})")
+find_program(GIT "git")
+if(NOT "${GIT}" STREQUAL "GIT-NOTFOUND")
+  exec_program(
+    ${GIT}
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ARGS "rev-parse --is-inside-work-tree"
+    OUTPUT_VARIABLE GITWORKTREE )
+  if( "${GITWORKTREE}" STREQUAL "true" )
+    exec_program(
+      ${GIT}
+      ${CMAKE_CURRENT_SOURCE_DIR}
+      ARGS "name-rev --tags --name-only $(git rev-parse HEAD)"
+      OUTPUT_VARIABLE GITTAG )
+    exec_program(
+      ${GIT}
+      ${CMAKE_CURRENT_SOURCE_DIR}
+      ARGS "rev-parse --short HEAD"
+      OUTPUT_VARIABLE GITHASH )
+    exec_program(
+      ${GIT}
+      ${CMAKE_CURRENT_SOURCE_DIR}
+      ARGS "diff-index --name-only HEAD"
+      OUTPUT_VARIABLE GITDIRTY
+      OUTPUT_STRIP_TRAILING_WHITESPACE)
+    if(GITDIRTY)
+      set (proxyme_VERSION  "${GITTAG} (${GITHASH}-dirty)")
+    else()
+      set (proxyme_VERSION  "${GITTAG} (${GITHASH})")
+    endif()
+  else()
+    set (proxyme_VERSION  "undefined (no git tree)")
+	endif()
+else()
+  set (proxyme_VERSION  "undefined (git not found)")
+endif()
 
 # configure a header file to pass some of the CMake settings
 # to the source code
