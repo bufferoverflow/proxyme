@@ -14,7 +14,7 @@
 #undef PACKAGE_URL
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION @proxyme_VERSION@
+#define PACKAGE_VERSION "@proxyme_VERSION@"
 
 #define DATADIR "@CMAKE_INSTALL_PREFIX@/share/proxyme/"
 #define CONFIGDIR "/.proxyme/"

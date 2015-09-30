@@ -80,6 +80,8 @@ int main(int argc, char** argv) {
           "Overwriting files, don't care if they exist!")
       ("save,s",  program_options::value<bool>(&save)->zero_tokens(),
           "Save current parameters within proxyme.ini file")
+      ("version,v",  program_options::value<bool>(&save)->zero_tokens(),
+          "get current version of proxyme")
       ("urlencode,u", program_options::value<bool>(&urlencode)->zero_tokens(),
           "Store the password in URL encoded form")
       ("HOME", program_options::value<boost::filesystem::path>(&home)->default_value(home),
@@ -92,6 +94,9 @@ int main(int argc, char** argv) {
     program_options::notify(options);
     if (options.count("help")) {
       cout << desc << endl;
+      return 1;
+    } else if (options.count("version")) {
+      cout << PACKAGE_VERSION << endl;
       return 1;
     }
   } catch (boost::program_options::unknown_option)
