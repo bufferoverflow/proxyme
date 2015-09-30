@@ -1,13 +1,18 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 PROJECT(proxyme)
 
-# The version number.
+# get the git tag and hash
 exec_program(
   "git"
   ${CMAKE_CURRENT_SOURCE_DIR}
   ARGS "name-rev --tags --name-only $(git rev-parse HEAD)"
-  OUTPUT_VARIABLE proxyme_VERSION )
-set (proxyme_VERSION  ${proxyme_VERSION})
+  OUTPUT_VARIABLE proxyme_GITTAG )
+exec_program(
+  "git"
+  ${CMAKE_CURRENT_SOURCE_DIR}
+  ARGS "rev-parse --short HEAD"
+  OUTPUT_VARIABLE proxyme_GITHASH )
+set (proxyme_VERSION  "${proxyme_GITTAG} (${proxyme_GITHASH})")
 
 # configure a header file to pass some of the CMake settings
 # to the source code
