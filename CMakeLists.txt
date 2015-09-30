@@ -5,9 +5,9 @@ PROJECT(proxyme)
 exec_program(
   "git"
   ${CMAKE_CURRENT_SOURCE_DIR}
-  ARGS "rev-parse --short HEAD"
+  ARGS "name-rev --tags --name-only $(git rev-parse HEAD)"
   OUTPUT_VARIABLE proxyme_VERSION )
-set (proxyme_VERSION  git-${proxyme_VERSION})
+set (proxyme_VERSION  ${proxyme_VERSION})
 
 # configure a header file to pass some of the CMake settings
 # to the source code
