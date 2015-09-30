@@ -27,7 +27,7 @@
  */
 
 #include <string>
-#include <iostream>  
+#include <iostream>
 #include <fstream>
 
 #include <unistd.h>
@@ -226,7 +226,15 @@ int main(int argc, char** argv) {
         cout << "overwrite " << target_file << endl;
       } else {
         cout << "write " << target_file << endl;
+        filesystem::path pathname(target_file);
+        filesystem::path dir(pathname.parent_path().string());
+
+        if(!(boost::filesystem::exists(dir))){
+          if (boost::filesystem::create_directory(dir))
+            std::cout << "non existing parent dir(" << dir << ") created!" << std::endl;
+        }
       }
+
       string output;
       ofstream genfile;
       ctemplate::ExpandTemplate(template_file, ctemplate::DO_NOT_STRIP, &dict, &output);
