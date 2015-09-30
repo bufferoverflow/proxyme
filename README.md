@@ -3,15 +3,14 @@ proxyme enable and disables proxy settings for several applications such as git,
 It uses the templates and the proxyme.ini file located at ~/.proxyme/
 to update the proxy settings of these applications.
 
+proxyme can be combined with [cntlm](http://cntlm.sourceforge.net/) to reduce proxy pain on developer machines.
 
 Build & Install it
 -------------------
-    mkdir proxyme 
-    cd proxyme
     git clone https://github.com/bufferoverflow/proxyme.git
-    mkdir build
-    cd build
-    cmake ../proxyme/
+    cd proxyme
+    mkdir cmake-build  && cd cmake-build
+    cmake ..
     make
     sudo make install
 
@@ -48,4 +47,4 @@ edit the files under ~/.proxyme/ to reflect your other personal settings as well
 
 License
 -------
-see [LICENSE](LICENSE) 
+see [LICENSE](LICENSE)
