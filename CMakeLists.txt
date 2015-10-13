@@ -2,26 +2,26 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 PROJECT(proxyme)
 
 # get the git tag and hash
-find_program(GIT "git")
-if(NOT "${GIT}" STREQUAL "GIT-NOTFOUND")
+find_package(Git)
+if(GIT_FOUND)
   exec_program(
-    ${GIT}
+    ${GIT_EXECUTABLE}
     ${CMAKE_CURRENT_SOURCE_DIR}
     ARGS "rev-parse --is-inside-work-tree"
     OUTPUT_VARIABLE GITWORKTREE )
   if( "${GITWORKTREE}" STREQUAL "true" )
     exec_program(
-      ${GIT}
+      ${GIT_EXECUTABLE}
       ${CMAKE_CURRENT_SOURCE_DIR}
       ARGS "name-rev --tags --name-only $(git rev-parse HEAD)"
       OUTPUT_VARIABLE GITTAG )
     exec_program(
-      ${GIT}
+      ${GIT_EXECUTABLE}
       ${CMAKE_CURRENT_SOURCE_DIR}
       ARGS "rev-parse --short HEAD"
       OUTPUT_VARIABLE GITHASH )
     exec_program(
-      ${GIT}
+      ${GIT_EXECUTABLE}
       ${CMAKE_CURRENT_SOURCE_DIR}
       ARGS "diff-index --name-only HEAD"
       OUTPUT_VARIABLE GITDIRTY
