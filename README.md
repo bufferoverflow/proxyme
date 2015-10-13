@@ -5,6 +5,15 @@ to update the proxy settings of these applications.
 
 proxyme can be combined with [cntlm](http://cntlm.sourceforge.net/) to reduce proxy pain on developer machines.
 
+Dependencies
+------------
+* boost: system, filesystem, program_options, regex
+* ctemplate
+
+on Debian install them with the following command
+
+    sudo apt-get install libctemplate-dev libboost-system-dev libboost-filesystem-dev libboost-program-options-dev libboost-regex-dev
+
 Build & Install it
 -------------------
     git clone https://github.com/bufferoverflow/proxyme.git
